@@ -32,9 +32,7 @@ def part2(lines:list):
     sum = 0
     for line in lines:
         digits = get_digits(line)
-        first = digits[0]
-        last = digits[-1]
-        num = first*10+last
+        num = digits[0]*10+digits[-1]
         sum += num
     return sum
 
