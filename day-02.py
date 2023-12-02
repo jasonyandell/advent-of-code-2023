@@ -27,8 +27,8 @@ def get_max_values(line) -> (int, (int,int,int)):
 def part1(target:(int,int,int), lines:list[str]) -> int:
     game_maxes = [get_max_values(s) for s in lines]
     total = 0
-    for (game, (red, green, blue)) in game_maxes:
-        if (red <= target[0] and green <= target[1] and blue <= target[2]):
+    for (game, maxes) in game_maxes:
+        if all(a <= b for (a, b) in zip(maxes, target)): #(red <= target[0] and green <= target[1] and blue <= target[2]):
             total += game
     return total
 
@@ -43,4 +43,4 @@ def part2(lines:list[str]) -> int:
 assert 8 == part1((12,13,14), SAMPLE)
 assert 2563 == part1((12,13,14), DATA)
 assert 2286 == part2(SAMPLE)
-print(part2(DATA))
+assert 70768 == part2(DATA)
