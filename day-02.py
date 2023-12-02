@@ -28,7 +28,7 @@ def part1(target:(int,int,int), lines:list[str]) -> int:
     game_maxes = [get_max_values(s) for s in lines]
     total = 0
     for (game, maxes) in game_maxes:
-        if all(a <= b for (a, b) in zip(maxes, target)): #(red <= target[0] and green <= target[1] and blue <= target[2]):
+        if all(a <= b for (a, b) in zip(maxes, target)):
             total += game
     return total
 
