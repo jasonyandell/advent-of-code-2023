@@ -1,44 +1,56 @@
-SAMPLE = [*open("data/03-p1-sample2.txt")]
-PART1 = [*open("data/03.txt")]
+SAMPLE = [*open("data/03-p1-sample.txt")]
+DATA = [*open("data/03.txt")]
 
 input = SAMPLE
 
-def part1(data):
+def solution(data, is_part_one=True):
     grid = [list(line.strip()+'.') for line in data]
 
     width = len(grid[0])
     height = len(grid)
 
-    def is_symbol_near(r:int,c:int,grid:list[list[str]]):
-        for dr in [-1,0,1]:
-            for dc in [-1,0,1]:
-                rpos = r+dr
-                cpos = c+dc
-                try:
-                    if grid[rpos][cpos] != "." and not grid[rpos][cpos].isdigit():
-                        return True
-                except IndexError:
-                    continue
-        return False
-    
-    numbers = []
+    def char_at(r,c): 
+        if r in range(height) and c in range(width): 
+            return grid[r][c]
+        else: 
+            return '.'
 
-    for r in range(height):
-        current = ""
-        found_symbol = False
+    def is_symbol(r,c): 
+        return char_at(r,c) not in '0123456789.'
 
-        for c in range(width):
-            if is_symbol_near(r, c, grid):
-                found_symbol = True
-            if grid[r][c].isdigit():
-                current += grid[r][c]
+    def get_numbers_near(r,c):        
+        numbers = []
+        for cc in [c-1,c,c+1]:
+            for rr in [r-1,r,r+1]:
+                if char_at(rr,cc).isdigit():
+                    start = cc
+                    while (char_at(rr,start-1).isdigit()): start -= 1
+                    number = ""
+                    curr = start
+                    while (char_at(rr,curr).isdigit()):
+                        number += char_at(rr, curr)
+                        grid[rr][curr] = '.'
+                        curr += 1
+                    numbers.append(int(number))
+        return numbers
+
+    all = []
+    for c in range(width):
+        for r in range(height):
+            if (is_part_one):
+                if is_symbol(r,c):
+                    all.extend(get_numbers_near(r, c))
             else:
-                if len(current)>0 and found_symbol:
-#                    if int(current)>1000:
-                    numbers.append(int(current))
-                current = ""
-                found_symbol = False
-    return sum(numbers)
+                if char_at(r,c) == '*':
+                    numbers = get_numbers_near(r, c)
+                    if len(numbers)==2: all.append(numbers[0]*numbers[1])
+    return sum(all)
 
-print(part1(SAMPLE))
-print(part1(PART1))  # 532460 too high, as is 530460
+
+
+print(solution(SAMPLE))
+print(solution(DATA))  # 532460 too high, as is 530460
+
+print("Part 2")
+print(solution(SAMPLE, False))
+print(solution(DATA, False))  # 532460 too high, as is 530460
