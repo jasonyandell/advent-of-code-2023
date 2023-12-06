@@ -1,9 +1,10 @@
+"""Day 4"""
+
 import re
 from parse import parse
-from collections import Counter
 
-SAMPLE = [*open("data/04-sample.txt")]
-INPUT = [*open("data/04.txt")]
+SAMPLE = [*open("data/04-sample.txt", encoding="utf-8")]
+INPUT = [*open("data/04.txt", encoding="utf-8")]
 
 def get_winners(line)->(int,int):
     """get the winners"""
