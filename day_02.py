@@ -1,3 +1,4 @@
+"""2"""
 import re
 
 SAMPLE:list[str] = [*open("data/02-p1-sample.txt")]
