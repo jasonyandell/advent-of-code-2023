@@ -10,11 +10,11 @@ INPUT = [*open("data/08.txt")]
 
 def parse_input(lines):
     path = lines[0].strip()
-    map = {}
+    instructions = {}
     for line in lines[2:]:
         node, l, r = parse.parse("{:w} = ({:w}, {:w})", line.strip())
-        map[node] = {'L':l, 'R':r}
-    return path, map
+        instructions[node] = {'L':l, 'R':r}
+    return path, instructions
 
 def part_1(lines):
     path, map = parse_input(lines)
